@@ -26,6 +26,6 @@ public class GameManager : MonoBehaviour
     }
     public void GameOver()
     {
-
+        //roundIndex가 한 40라운드에서 게임 종료 하는 걸로;;
     }
 }
