@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.Processors;
 public interface Idamagable
 {
-    public void TakeDamaged(float damage);
+    public bool TakeDamaged(float damage);
 }
 public class Enemy : MonoBehaviour, Idamagable
 {
