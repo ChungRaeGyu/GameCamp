@@ -1,18 +1,99 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] enemys;
     [SerializeField] private GameObject commander;
-    [SerializeField] private GameObject[] heros;
+    [SerializeField] private GameObject[] normalHeros;
+    [SerializeField] private GameObject[] rareHeros;
+    [SerializeField] private GameObject[] mythHeros;
+    [SerializeField] private GameObject[] legendaryHeros;
 
 
     [SerializeField] private Transform enemySpawnPoint;
     [SerializeField] private Transform commanderSpawnPoint;
     [SerializeField] private int spawnCount;
 
+    SpawnUnit spawnInput;
+    [SerializeField] private Tilemap tilemap;
+
+    private Dictionary<Vector3Int, GameObject> occupiedTiles = new();
+    private void Awake()
+    {
+        spawnInput = new SpawnUnit();
+        spawnInput.Enable();
+        spawnInput.KeyBoardMouse.Spawn.performed += UnitSpawn;
+        Debug.Log("완");
+    }
+
+    private void UnitSpawn(InputAction.CallbackContext context)
+    {
+        Debug.Log("뭐지)");
+        if (context.phase == InputActionPhase.Performed)
+        {
+
+            Debug.Log("Spawn");
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(spawnInput.KeyBoardMouse.MousePos.ReadValue<Vector2>());
+
+            // 월드 좌표 → 타일 좌표
+            Vector3Int cellPos = tilemap.WorldToCell(new Vector3(mousePos.x, mousePos.y,0));
+
+            TileBase tile = tilemap.GetTile(cellPos);
+
+            Debug.Log($"타일 좌표: {cellPos}, 타일: {tile}");
+            Debug.Log(tilemap.cellBounds);
+            if (tile == null)
+            {
+                Debug.Log("으잉?");
+                return;
+            }
+
+
+            SpawnCharacter(cellPos);
+        }
+    }
+
+    private void SpawnCharacter(Vector3Int cellPos)
+    {
+
+        if (occupiedTiles.ContainsKey(cellPos))
+            return;
+
+        Vector3 pos = tilemap.GetCellCenterWorld(cellPos);
+
+
+        GameObject obj = Instantiate(RandomHeros(), pos, Quaternion.identity);
+
+        occupiedTiles.Add(cellPos, obj);
+    }
+
+    private GameObject RandomHeros()
+    {
+        int random = Random.Range(0, 100);
+
+        if (random < 85)
+        {
+            return normalHeros[Random.Range(0, normalHeros.Length)];
+        }
+        else if (random < 95)
+        {
+            return rareHeros[Random.Range(0, rareHeros.Length)];
+        }
+        else if (random < 99)
+        {
+            return mythHeros[Random.Range(0, mythHeros.Length)];
+        }
+        else
+        {
+            return legendaryHeros[Random.Range(0, legendaryHeros.Length)];
+        }
+    }
     private void Start()
     {
         GameManager.instance.nextRound += OnNextRound;
