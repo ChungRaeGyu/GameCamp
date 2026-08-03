@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public bool isStart = false;
     public event Action nextRound;
     public int roundIndex = 0;
+    public SpawnManager spawnManager;
+    public UiManager uiManager;
     private void Awake()
     {
         if (instance == null)

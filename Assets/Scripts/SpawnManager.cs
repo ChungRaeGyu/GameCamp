@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
+using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 public class SpawnManager : MonoBehaviour
@@ -22,27 +23,35 @@ public class SpawnManager : MonoBehaviour
 
     SpawnUnit spawnInput;
     [SerializeField] private Tilemap tilemap;
+    private Vector3Int cellPos;
 
     private Dictionary<Vector3Int, GameObject> occupiedTiles = new();
     private void Awake()
     {
         spawnInput = new SpawnUnit();
         spawnInput.Enable();
-        spawnInput.KeyBoardMouse.Spawn.performed += UnitSpawn;
+        spawnInput.KeyBoardMouse.Spawn.canceled += UnitSpawn;
         Debug.Log("완");
+    }
+
+    private void Start()
+    {
+        GameManager.instance.spawnManager = this;
+        GameManager.instance.nextRound += OnNextRound;
+        Instantiate(commander, commanderSpawnPoint.position, Quaternion.identity);
     }
 
     private void UnitSpawn(InputAction.CallbackContext context)
     {
         Debug.Log("뭐지)");
-        if (context.phase == InputActionPhase.Performed)
+        if (context.phase == InputActionPhase.Canceled)
         {
 
             Debug.Log("Spawn");
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(spawnInput.KeyBoardMouse.MousePos.ReadValue<Vector2>());
-
+            Vector3 worldPos = new Vector3(mousePos.x, mousePos.y, 0);
             // 월드 좌표 → 타일 좌표
-            Vector3Int cellPos = tilemap.WorldToCell(new Vector3(mousePos.x, mousePos.y,0));
+            cellPos = tilemap.WorldToCell(worldPos);
 
             TileBase tile = tilemap.GetTile(cellPos);
 
@@ -54,23 +63,23 @@ public class SpawnManager : MonoBehaviour
                 return;
             }
 
+            if (occupiedTiles.ContainsKey(cellPos))
+                return;
 
-            SpawnCharacter(cellPos);
+            GameManager.instance.uiManager.SpawnButtonActive(worldPos);
+
         }
     }
 
-    private void SpawnCharacter(Vector3Int cellPos)
+    public void SpawnHeroButton()
     {
-
-        if (occupiedTiles.ContainsKey(cellPos))
-            return;
-
+        //Button 클릭 시 호출되는 함수
         Vector3 pos = tilemap.GetCellCenterWorld(cellPos);
-
 
         GameObject obj = Instantiate(RandomHeros(), pos, Quaternion.identity);
 
         occupiedTiles.Add(cellPos, obj);
+
     }
 
     private GameObject RandomHeros()
@@ -94,11 +103,7 @@ public class SpawnManager : MonoBehaviour
             return legendaryHeros[Random.Range(0, legendaryHeros.Length)];
         }
     }
-    private void Start()
-    {
-        GameManager.instance.nextRound += OnNextRound;
-        Instantiate(commander, commanderSpawnPoint.position, Quaternion.identity);
-    }
+
 
     private void OnNextRound()
     {
