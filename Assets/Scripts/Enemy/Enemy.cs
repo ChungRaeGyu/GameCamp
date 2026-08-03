@@ -13,10 +13,42 @@ public class Enemy : MonoBehaviour, Idamagable
     [SerializeField] private float attackInterval = 0.5f;
     private float attackTimer;
     private Commander commander;
+    private Vector2 segmentStartPosition;
+
+    public float Progress
+    {
+        get
+        {
+            if (index >= GameManager.instance.waypoints.Length)
+            {
+                return GameManager.instance.waypoints.Length;
+            }
+
+            Vector2 nextWaypointPosition = GameManager.instance.waypoints[index].position;
+            float segmentLength = Vector2.Distance(segmentStartPosition, nextWaypointPosition);
+            if (segmentLength <= Mathf.Epsilon)
+            {
+                return index;
+            }
+
+            float segmentProgress = 1f - Vector2.Distance(transform.position, nextWaypointPosition) / segmentLength;
+            return index + Mathf.Clamp01(segmentProgress);
+        }
+    }
 
     private void Start()
     {
         commander = FindAnyObjectByType<Commander>();
+        segmentStartPosition = transform.position;
+        GameManager.instance.enemyManager?.Register(this);
+    }
+
+    private void OnDestroy()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.enemyManager?.Unregister(this);
+        }
     }
     float hp = 100;  //나중에 라운드당 Hp를 추가로 줄것이다.
 
@@ -54,6 +86,7 @@ public class Enemy : MonoBehaviour, Idamagable
 
             if (Vector2.Distance(transform.position, target.position) < 0.05f)
             {
+                segmentStartPosition = target.position;
                 index++;
             }
         }
@@ -69,14 +102,6 @@ public class Enemy : MonoBehaviour, Idamagable
 
         attackTimer = 0;
 
-        if (commander == null)
-        {
-            commander = FindAnyObjectByType<Commander>();
-        }
-
-        if (commander != null)
-        {
-            commander.TakeDamaged(attackDamage);
-        }
+        commander.TakeDamaged(attackDamage);
     }
 }

@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
-using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] enemys;
     [SerializeField] private GameObject commander;
-    [SerializeField] private GameObject[] normalHeros;
-    [SerializeField] private GameObject[] rareHeros;
-    [SerializeField] private GameObject[] mythHeros;
-    [SerializeField] private GameObject[] legendaryHeros;
+    [SerializeField] private HeroSO[] normalHeros;
+    [SerializeField] private HeroSO[] rareHeros;
+    [SerializeField] private HeroSO[] mythHeros;
+    [SerializeField] private HeroSO[] legendaryHeros;
+    [SerializeField] private GameObject heroPrefabs;
 
 
     [SerializeField] private Transform enemySpawnPoint;
@@ -70,10 +70,6 @@ public class SpawnManager : MonoBehaviour
                 Debug.Log("골드 부족");
                 return;
             }
-            else
-            {
-                GameManager.instance.moneyManager.AddGold(-40);
-            }
             GameManager.instance.uiManager.SpawnButtonActive(worldPos);
 
         }
@@ -84,13 +80,14 @@ public class SpawnManager : MonoBehaviour
         //Button 클릭 시 호출되는 함수
         Vector3 pos = tilemap.GetCellCenterWorld(cellPos);
 
-        GameObject obj = Instantiate(RandomHeros(), pos, Quaternion.identity);
+        GameObject obj = Instantiate(heroPrefabs, new Vector3(pos.x,pos.y,0), Quaternion.identity);
+        obj.GetComponent<Hero>().Configure(RandomHeros());
 
         occupiedTiles.Add(cellPos, obj);
 
     }
 
-    private GameObject RandomHeros()
+    private HeroSO RandomHeros()
     {
         int random = Random.Range(0, 100);
 

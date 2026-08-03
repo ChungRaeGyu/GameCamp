@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class MoneyManager : MonoBehaviour
 {
-    private int gold = 0;
-    private int cristal = 0;
-    private void Awake()
+    [SerializeField] private int gold = 0;
+    [SerializeField] private int cristal = 0;
+    private void Start()
     {
         GameManager.instance.moneyManager = this;
     }

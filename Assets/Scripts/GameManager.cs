@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public SpawnManager spawnManager;
     public UiManager uiManager;
     public MoneyManager moneyManager;
+    public EnemyManager enemyManager;
+
     private void Awake()
     {
         if (instance == null)
@@ -28,6 +30,10 @@ public class GameManager : MonoBehaviour
         roundIndex++;
     }
     public void GameOver()
+    {
+        //Commander가 죽으면 게임오버
+    }
+    public void GameClear()
     {
         //roundIndex가 한 40라운드에서 게임 종료 하는 걸로;;
     }
