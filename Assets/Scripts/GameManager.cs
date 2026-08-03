@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public int roundIndex = 0;
     public SpawnManager spawnManager;
     public UiManager uiManager;
+    public MoneyManager moneyManager;
     private void Awake()
     {
         if (instance == null)

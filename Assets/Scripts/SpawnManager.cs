@@ -65,7 +65,15 @@ public class SpawnManager : MonoBehaviour
 
             if (occupiedTiles.ContainsKey(cellPos))
                 return;
-
+            if (GameManager.instance.moneyManager.GetGold() < 40)
+            {
+                Debug.Log("골드 부족");
+                return;
+            }
+            else
+            {
+                GameManager.instance.moneyManager.AddGold(-40);
+            }
             GameManager.instance.uiManager.SpawnButtonActive(worldPos);
 
         }
