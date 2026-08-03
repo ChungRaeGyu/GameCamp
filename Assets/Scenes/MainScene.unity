@@ -425,13 +425,30 @@ MonoBehaviour:
   - {fileID: 1086427956199434042, guid: c5c86276a6e300a40823e06774f278be, type: 3}
   commander: {fileID: 7339074068240042316, guid: 83d4dd1032800594a80c5fbb41a49cde, type: 3}
   normalHeros:
-  - {fileID: 7339074068240042316, guid: f4ffb2a42e313c249a57748a9429473a, type: 3}
+  - {fileID: 11400000, guid: a3ed9813a4786814bb0c986d45bd978b, type: 2}
+  - {fileID: 11400000, guid: 999bea224640d63489487d3ee0d067d4, type: 2}
+  - {fileID: 11400000, guid: 960a08c8480f2a54a91b4673df730891, type: 2}
+  - {fileID: 11400000, guid: 951c33dde3145e545a26dce7ae98e8f4, type: 2}
   rareHeros:
-  - {fileID: 7339074068240042316, guid: f4ffb2a42e313c249a57748a9429473a, type: 3}
+  - {fileID: 11400000, guid: bf7cbeeb7398ba3459ddc3b86e5bf477, type: 2}
+  - {fileID: 11400000, guid: 779e39ed8534b90489cad7e3fa583637, type: 2}
+  - {fileID: 11400000, guid: 8286767fb631fdb46a39ba6df47dc679, type: 2}
+  - {fileID: 11400000, guid: e416dc0785ee3cb47a65350f5c095d17, type: 2}
+  - {fileID: 11400000, guid: 163a63a31bb62014180a843740e45de4, type: 2}
   mythHeros:
-  - {fileID: 7339074068240042316, guid: f4ffb2a42e313c249a57748a9429473a, type: 3}
+  - {fileID: 11400000, guid: d3246909337d6b14e821c277ef2d5b9b, type: 2}
+  - {fileID: 11400000, guid: 54886cfac1b599642b3e24a8a3b12da6, type: 2}
+  - {fileID: 11400000, guid: 05d71c507e3bdb0498c22c6080885095, type: 2}
+  - {fileID: 11400000, guid: 43110133e00c61e4badb9d6b49c8e49d, type: 2}
+  - {fileID: 11400000, guid: bb5d6b0cdaca98b4aa80938a15278640, type: 2}
   legendaryHeros:
-  - {fileID: 7339074068240042316, guid: f4ffb2a42e313c249a57748a9429473a, type: 3}
+  - {fileID: 11400000, guid: 70389d27c138958419b9025411c8073d, type: 2}
+  - {fileID: 11400000, guid: 4e2c8ebc21377f24a8eb95740982958f, type: 2}
+  - {fileID: 11400000, guid: ae705232347666641a211eeb82fbb250, type: 2}
+  - {fileID: 11400000, guid: 9f09a9f3a7d02544f905288951a3a96d, type: 2}
+  - {fileID: 11400000, guid: 7e59e4e72567747449d05d2faab2254f, type: 2}
+  - {fileID: 11400000, guid: 9bdc872e56d47d34e8bc4f48b0d8fe02, type: 2}
+  - {fileID: 11400000, guid: a1bd58cfd0c20a444a4640b7f6ae830e, type: 2}
   heroPrefabs: {fileID: 7339074068240042316, guid: f4ffb2a42e313c249a57748a9429473a, type: 3}
   enemySpawnPoint: {fileID: 1591566977}
   commanderSpawnPoint: {fileID: 704950018}
@@ -629,6 +646,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f2a137cac56cb4e818ad6ba054485a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoneyManager
+  gold: 0
+  cristal: 0
 --- !u!4 &475805225
 Transform:
   m_ObjectHideFlags: 0

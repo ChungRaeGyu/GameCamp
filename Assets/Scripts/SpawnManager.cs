@@ -70,7 +70,8 @@ public class SpawnManager : MonoBehaviour
                 Debug.Log("골드 부족");
                 return;
             }
-            GameManager.instance.uiManager.SpawnButtonActive(worldPos);
+            Vector3 pos = tilemap.GetCellCenterWorld(cellPos);
+            GameManager.instance.uiManager.SpawnButtonActive(pos);
 
         }
     }

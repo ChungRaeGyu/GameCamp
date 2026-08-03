@@ -66,6 +66,8 @@ public class Enemy : MonoBehaviour, Idamagable
 
     private void Dead()
     {
+        //나중에 적 SO를 만들어서 골드까지 넣자
+        GameManager.instance.moneyManager.AddGold(10);
         Destroy(gameObject);
     }
 
