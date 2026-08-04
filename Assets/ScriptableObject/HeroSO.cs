@@ -7,6 +7,7 @@ public class HeroSO : ScriptableObject
     [SerializeField] private string heroName;
     [SerializeField] private Sprite sprite;
     [SerializeField] private RuntimeAnimatorController animatorController;
+    [SerializeField] private HeroType heroType;
 
     [Header("Combat")]
     [SerializeField] private float attackDamage = 10f;
@@ -31,4 +32,5 @@ public class HeroSO : ScriptableObject
     public GameObject ProjectilePrefab => projectilePrefab;
     public float ProjectileSpeed => projectileSpeed;
     public float ProjectileLifetime => projectileLifetime;
+    public HeroType HeroType => heroType;
 }

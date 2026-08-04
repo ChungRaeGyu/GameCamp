@@ -8,6 +8,9 @@ public class Commander : MonoBehaviour, Idamagable
     float timer = 0;
     [SerializeField] float hp = 2000f;
 
+    public float CurrentHp => hp;
+    public bool IsAlive => hp > 0f;
+
     private void Update()
     {
         Attack();

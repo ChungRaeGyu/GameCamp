@@ -423,6 +423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
   enemys:
   - {fileID: 1086427956199434042, guid: c5c86276a6e300a40823e06774f278be, type: 3}
+  bossEnemy: {fileID: 0}
   commander: {fileID: 7339074068240042316, guid: 83d4dd1032800594a80c5fbb41a49cde, type: 3}
   normalHeros:
   - {fileID: 11400000, guid: a3ed9813a4786814bb0c986d45bd978b, type: 2}
@@ -646,7 +647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f2a137cac56cb4e818ad6ba054485a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoneyManager
-  gold: 0
+  gold: 100
   cristal: 0
 --- !u!4 &475805225
 Transform:
@@ -734,6 +735,9 @@ MonoBehaviour:
   - {fileID: 2074362398}
   isStart: 0
   roundIndex: 0
+  normalRoundDuration: 15
+  bossRoundDuration: 30
+  totalRoundCount: 40
   spawnManager: {fileID: 0}
   uiManager: {fileID: 0}
   moneyManager: {fileID: 0}
@@ -1278,7 +1282,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9afa361baa7148341981bb7105aa44b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UiManager
-  spawnButtonPrefab: {fileID: 5454972734247016039, guid: 40ddbfc36dbd67d4799ddc574a986569, type: 3}
+  spawnButtonPrefab: {fileID: 4080954231661189708, guid: 40ddbfc36dbd67d4799ddc574a986569, type: 3}
+  promotionButtonPrefab: {fileID: 2532360077343051581, guid: c4445e87bdd4f7f4387a85b3102b7386, type: 3}
 --- !u!1 &1554352611
 GameObject:
   m_ObjectHideFlags: 0

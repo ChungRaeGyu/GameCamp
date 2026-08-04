@@ -1,4 +1,12 @@
 using UnityEngine;
+public enum HeroType
+{
+    Normal,
+    Rare,
+    Myth,
+    Legendary,
+    Random
+}
 public class Hero : MonoBehaviour
 {
     [SerializeField] private HeroSO heroData;
@@ -9,6 +17,10 @@ public class Hero : MonoBehaviour
     private float attackTimer;
 
     private Enemy target;
+
+    public Vector3Int tilePos;
+
+    public HeroSO Data => heroData;
 
 
     private void Awake()
@@ -56,7 +68,15 @@ public class Hero : MonoBehaviour
             return;
         }
 
-        animator.runtimeAnimatorController = heroData.AnimatorController;
+        if (spriteRenderer != null && heroData.Sprite != null)
+        {
+            spriteRenderer.sprite = heroData.Sprite;
+        }
+
+        if (animator != null)
+        {
+            animator.runtimeAnimatorController = heroData.AnimatorController;
+        }
     }
 
     private Enemy FindTarget()
