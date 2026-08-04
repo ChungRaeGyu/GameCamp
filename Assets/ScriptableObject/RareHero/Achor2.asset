@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55d766ee2d928b140bbfbcea9866a6e9, type: 3}
+  m_Name: Achor2
+  m_EditorClassIdentifier: Assembly-CSharp::HeroSO
+  heroName: Achor2
+  sprite: {fileID: 5088316998373936774, guid: 6ce32cb1bdb34fb4eb0b4c81fc4917a5, type: 3}
+  animatorController: {fileID: 9100000, guid: 552a4b31644039b4e92080fecee73aa9, type: 2}
+  heroType: 1
+  attackDamage: 10
+  attacksPerSecond: 1
+  attackRange: 3
+  projectilePrefab: {fileID: 1176854336001614763, guid: 309963c15dba051489987440b2074f7a, type: 3}
+  projectileSpeed: 8
+  projectileLifetime: 3

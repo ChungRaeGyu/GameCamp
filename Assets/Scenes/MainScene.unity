@@ -421,9 +421,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab03151d556af56479236a873e36befa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
-  enemys:
-  - {fileID: 1086427956199434042, guid: c5c86276a6e300a40823e06774f278be, type: 3}
-  bossEnemy: {fileID: 0}
+  enemys: {fileID: 1086427956199434042, guid: c5c86276a6e300a40823e06774f278be, type: 3}
+  enemyDatas:
+  - {fileID: 11400000, guid: 0779832f46a3a094f8727e9fb5d96e30, type: 2}
+  - {fileID: 11400000, guid: d8207e57bec9c4a499adb6dd32a8b72d, type: 2}
+  - {fileID: 11400000, guid: 2874f2e04fc9f764cae762e048e6dc5a, type: 2}
+  - {fileID: 11400000, guid: 79f5ea40cc6f67940852baf2c76d6698, type: 2}
+  - {fileID: 11400000, guid: 97e41d3c9932b38469af813beb0235f3, type: 2}
+  - {fileID: 11400000, guid: 8e133940573c75c4bb340dabcb7618df, type: 2}
+  - {fileID: 11400000, guid: db391feb1e33ab9499a277e5f22fba66, type: 2}
+  - {fileID: 11400000, guid: 17fd3df0908bc794bb87cd3e4bde90d6, type: 2}
+  - {fileID: 11400000, guid: 22123b23f6af5df47bb52fb0c01aea3a, type: 2}
+  - {fileID: 0}
+  - {fileID: 11400000, guid: f7b2c4f5bdc0b93419d92f334ff0ebb8, type: 2}
+  - {fileID: 11400000, guid: 6f355481936e81a48ad9fbbe4505edf2, type: 2}
+  - {fileID: 11400000, guid: 585201492025c2a448c9e1d70c51472f, type: 2}
+  - {fileID: 11400000, guid: 7bcd43aba75413d4c8617be7ec4feb64, type: 2}
+  - {fileID: 11400000, guid: 3524aa15e5fc1c149bddb67db8ab8594, type: 2}
+  - {fileID: 11400000, guid: 8f62f76ef5b76434da86bb6b182a1688, type: 2}
+  - {fileID: 11400000, guid: 51198ea66a5a6154982441decff6e8d5, type: 2}
+  - {fileID: 11400000, guid: 65ae67523e2a1ce419417aba2664602e, type: 2}
+  - {fileID: 11400000, guid: 0a08e69376edecd4db6c0cfd4f3eb50c, type: 2}
+  - {fileID: 11400000, guid: 564b7943db9cde24ca58368264c18e47, type: 2}
+  - {fileID: 0}
+  - {fileID: 11400000, guid: f5a5a399a37109142816fe5cdad6bd08, type: 2}
+  - {fileID: 11400000, guid: 2ad6839bb6384ae48879fbc3cc5578e5, type: 2}
+  - {fileID: 11400000, guid: 1c56897db91c7774b9c2d34a8382f377, type: 2}
+  - {fileID: 11400000, guid: b4e1f994335adeb4e9ed06d6515023db, type: 2}
+  - {fileID: 11400000, guid: 90f50d76a9df3f84b8fc2878db1bc284, type: 2}
+  - {fileID: 11400000, guid: 656429151980da840afbf5423e96833c, type: 2}
+  - {fileID: 11400000, guid: cabb669cf62b94942a6fbd7bacf4eb9e, type: 2}
+  - {fileID: 11400000, guid: c94c31031c296b143b3a1906e57f7075, type: 2}
+  - {fileID: 0}
+  bossEnemy: {fileID: 6783952113262196597, guid: b6c059707f306884aae80b3ab7bd1d5e, type: 3}
+  bossEnemyData:
+  - {fileID: 11400000, guid: 72d88857ec87f094ea530491c722b8e7, type: 2}
+  - {fileID: 11400000, guid: 9f392ff4c13792d45a7f073516393fc0, type: 2}
+  - {fileID: 11400000, guid: d4c9014cc7b72164f8d3964eb9fccff8, type: 2}
   commander: {fileID: 7339074068240042316, guid: 83d4dd1032800594a80c5fbb41a49cde, type: 3}
   normalHeros:
   - {fileID: 11400000, guid: a3ed9813a4786814bb0c986d45bd978b, type: 2}
@@ -431,25 +465,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 960a08c8480f2a54a91b4673df730891, type: 2}
   - {fileID: 11400000, guid: 951c33dde3145e545a26dce7ae98e8f4, type: 2}
   rareHeros:
-  - {fileID: 11400000, guid: bf7cbeeb7398ba3459ddc3b86e5bf477, type: 2}
-  - {fileID: 11400000, guid: 779e39ed8534b90489cad7e3fa583637, type: 2}
-  - {fileID: 11400000, guid: 8286767fb631fdb46a39ba6df47dc679, type: 2}
-  - {fileID: 11400000, guid: e416dc0785ee3cb47a65350f5c095d17, type: 2}
-  - {fileID: 11400000, guid: 163a63a31bb62014180a843740e45de4, type: 2}
+  - {fileID: 11400000, guid: 1443b6953ba04414797ff5826b129c92, type: 2}
+  - {fileID: 11400000, guid: 8cf0de1b996225c408b02f3ee65f9b46, type: 2}
+  - {fileID: 11400000, guid: 85cd9404fa9c2654781e5662c5fb4de6, type: 2}
+  - {fileID: 11400000, guid: 60af98ca51e02bb479c948ef1e6bbd62, type: 2}
   mythHeros:
-  - {fileID: 11400000, guid: d3246909337d6b14e821c277ef2d5b9b, type: 2}
-  - {fileID: 11400000, guid: 54886cfac1b599642b3e24a8a3b12da6, type: 2}
-  - {fileID: 11400000, guid: 05d71c507e3bdb0498c22c6080885095, type: 2}
-  - {fileID: 11400000, guid: 43110133e00c61e4badb9d6b49c8e49d, type: 2}
-  - {fileID: 11400000, guid: bb5d6b0cdaca98b4aa80938a15278640, type: 2}
+  - {fileID: 11400000, guid: 0862b070c31dd54468926bea6da8e1e3, type: 2}
+  - {fileID: 11400000, guid: 3aefe4fca88cfae4f879fecc443b6bc1, type: 2}
+  - {fileID: 11400000, guid: 0ca6445cc5dee374a8b91a17b3984793, type: 2}
+  - {fileID: 11400000, guid: 99e4ba9d2ad82474c9930fd71ef58ad7, type: 2}
   legendaryHeros:
-  - {fileID: 11400000, guid: 70389d27c138958419b9025411c8073d, type: 2}
-  - {fileID: 11400000, guid: 4e2c8ebc21377f24a8eb95740982958f, type: 2}
-  - {fileID: 11400000, guid: ae705232347666641a211eeb82fbb250, type: 2}
-  - {fileID: 11400000, guid: 9f09a9f3a7d02544f905288951a3a96d, type: 2}
-  - {fileID: 11400000, guid: 7e59e4e72567747449d05d2faab2254f, type: 2}
-  - {fileID: 11400000, guid: 9bdc872e56d47d34e8bc4f48b0d8fe02, type: 2}
-  - {fileID: 11400000, guid: a1bd58cfd0c20a444a4640b7f6ae830e, type: 2}
+  - {fileID: 11400000, guid: 96ae3c870d748224e87c26e0cfa6cb0c, type: 2}
+  - {fileID: 11400000, guid: 189328d4c009faa43a7071ebf4216452, type: 2}
+  - {fileID: 11400000, guid: d62ca8cedec02ee4a970db2da69dd3dc, type: 2}
+  - {fileID: 11400000, guid: 5dd146e9cbaff774d8edc9de2a3978cf, type: 2}
   heroPrefabs: {fileID: 7339074068240042316, guid: f4ffb2a42e313c249a57748a9429473a, type: 3}
   enemySpawnPoint: {fileID: 1591566977}
   commanderSpawnPoint: {fileID: 704950018}
@@ -737,6 +766,7 @@ MonoBehaviour:
   roundIndex: 0
   normalRoundDuration: 15
   bossRoundDuration: 30
+  clearedWaveDelay: 1
   totalRoundCount: 40
   spawnManager: {fileID: 0}
   uiManager: {fileID: 0}

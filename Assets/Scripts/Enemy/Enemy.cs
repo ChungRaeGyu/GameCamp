@@ -8,12 +8,16 @@ public class Enemy : MonoBehaviour, Idamagable
 {
     // Update is called once per frame
     int index = 0;
+    [SerializeField] private EnemySO enemyData;
     [SerializeField] private float speed = 1.0f;
     [SerializeField] private float attackDamage = 10f;
     [SerializeField] private float attackInterval = 0.5f;
     private float attackTimer;
     private Commander commander;
     private Vector2 segmentStartPosition;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
+    private int currentWalkState;
 
     public float Progress
     {
@@ -36,11 +40,47 @@ public class Enemy : MonoBehaviour, Idamagable
         }
     }
 
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     private void Start()
     {
+        ApplyEnemyData();
         commander = FindAnyObjectByType<Commander>();
         segmentStartPosition = transform.position;
         GameManager.instance.enemyManager?.Register(this);
+    }
+
+    public void Configure(EnemySO data)
+    {
+        enemyData = data;
+        ApplyEnemyData();
+    }
+
+    private void ApplyEnemyData()
+    {
+        if (enemyData == null)
+        {
+            return;
+        }
+
+        speed = enemyData.MoveSpeed;
+        hp = enemyData.Hp;
+        attackDamage = enemyData.AttackDamage;
+        attackInterval = enemyData.AttackInterval;
+
+        if (spriteRenderer != null && enemyData.Sprite != null)
+        {
+            spriteRenderer.sprite = enemyData.Sprite;
+        }
+
+        if (enemyData.AnimatorController != null)
+        { 
+            animator.runtimeAnimatorController = enemyData.AnimatorController;
+        }
     }
 
     private void OnDestroy()
@@ -80,6 +120,7 @@ public class Enemy : MonoBehaviour, Idamagable
         else
         {
             Transform target = GameManager.instance.waypoints[index];
+            UpdateMoveDirection(target.position - transform.position);
 
             transform.position = Vector2.MoveTowards(
                 transform.position,
@@ -104,6 +145,42 @@ public class Enemy : MonoBehaviour, Idamagable
 
         attackTimer = 0;
 
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack");
+        }
+
         commander.TakeDamaged(attackDamage);
+    }
+
+    private void UpdateMoveDirection(Vector2 direction)
+    {
+        if (Mathf.Abs(direction.x) < 0.01f)
+        {
+            return;
+        }
+
+        bool movingLeft = direction.x < 0f;
+        int walkState = Animator.StringToHash(movingLeft ? "Left_Walk-Walk" : "Right_Walk-Walk");
+
+        if (animator != null && animator.HasState(0, walkState))
+        {
+            if (currentWalkState != walkState)
+            {
+                animator.Play(walkState);
+                currentWalkState = walkState;
+            }
+
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.flipX = false;
+            }
+            return;
+        }
+
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.flipX = movingLeft;
+        }
     }
 }

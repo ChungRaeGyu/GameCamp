@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55d766ee2d928b140bbfbcea9866a6e9, type: 3}
+  m_Name: Gun1
+  m_EditorClassIdentifier: Assembly-CSharp::HeroSO
+  heroName: Gun1
+  sprite: {fileID: 5088316998373936774, guid: 4ce1ba304b1772f4fb26ae094cea8e91, type: 3}
+  animatorController: {fileID: 9100000, guid: f73b77740c31e6d4da4c390076167bf4, type: 2}
+  heroType: 0
+  attackDamage: 10
+  attacksPerSecond: 1
+  attackRange: 3
+  projectilePrefab: {fileID: 7844965060319381413, guid: d2e2cca30be3b754ab36113a6b268663, type: 3}
+  projectileSpeed: 8
+  projectileLifetime: 3

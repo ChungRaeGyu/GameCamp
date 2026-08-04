@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55d766ee2d928b140bbfbcea9866a6e9, type: 3}
+  m_Name: Bow3
+  m_EditorClassIdentifier: Assembly-CSharp::HeroSO
+  heroName: Bow3
+  sprite: {fileID: 5088316998373936774, guid: a2e5cbe208fa34c4a8ab59f1e7f470e7, type: 3}
+  animatorController: {fileID: 9100000, guid: bd87874f5be1737439047f20306867b9, type: 2}
+  heroType: 2
+  attackDamage: 10
+  attacksPerSecond: 1
+  attackRange: 3
+  projectilePrefab: {fileID: 7904444019433152226, guid: b3bc34e4d29d7c14ba325c5fb23595d9, type: 3}
+  projectileSpeed: 8
+  projectileLifetime: 3

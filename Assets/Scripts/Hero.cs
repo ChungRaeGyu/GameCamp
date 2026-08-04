@@ -36,8 +36,13 @@ public class Hero : MonoBehaviour
             return;
         }
 
-        if (target != null)
+        if (attackTimer > 0f)
         {
+            if (target != null)
+            {
+                FaceTarget(target);
+            }
+
             attackTimer -= Time.deltaTime;
             if (attackTimer > 0f)
             {
@@ -51,6 +56,7 @@ public class Hero : MonoBehaviour
             return;
         }
 
+        FaceTarget(target);
         Fire(target);
         attackTimer = heroData.AttackInterval;
     }
@@ -120,5 +126,19 @@ public class Hero : MonoBehaviour
         }
 
         projectile.Initialize(target, heroData.AttackDamage, heroData.ProjectileSpeed, heroData.ProjectileLifetime);
+    }
+
+    private void FaceTarget(Enemy attackTarget)
+    {
+        if (spriteRenderer == null || attackTarget == null)
+        {
+            return;
+        }
+
+        float horizontalDistance = attackTarget.transform.position.x - transform.position.x;
+        if (!Mathf.Approximately(horizontalDistance, 0f))
+        {
+            spriteRenderer.flipX = horizontalDistance < 0f;
+        }
     }
 }

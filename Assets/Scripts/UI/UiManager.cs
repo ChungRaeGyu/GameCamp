@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UiManager : MonoBehaviour
 {
@@ -33,12 +34,12 @@ public class UiManager : MonoBehaviour
     public void SpawnButtonActive(Vector3 pos)
     {
         spawnButton.transform.position = pos;
-        promotionButton.SetActive(true);
+        spawnButton.SetActive(true);
     }
     public void PromotionActive(Vector3 pos)
     {
         promotionButton.transform.position = pos;
-        spawnButton.SetActive(true);
+        promotionButton.SetActive(true);
     }
     public void ShowResult(bool isVictory)
     {
@@ -77,8 +78,51 @@ public class UiManager : MonoBehaviour
         textRect.anchorMax = new Vector2(0.5f, 0.5f);
         textRect.pivot = new Vector2(0.5f, 0.5f);
         textRect.sizeDelta = new Vector2(800f, 180f);
-        textRect.anchoredPosition = Vector2.zero;
+        textRect.anchoredPosition = new Vector2(0f, 60f);
+
+        CreateRestartButton();
 
         resultCanvasObject.SetActive(false);
+    }
+
+    private void CreateRestartButton()
+    {
+        GameObject buttonObject = new GameObject("RestartButton", typeof(RectTransform), typeof(Image), typeof(Button));
+        buttonObject.transform.SetParent(resultPanel.transform, false);
+
+        Image buttonImage = buttonObject.GetComponent<Image>();
+        buttonImage.color = Color.clear;
+
+        Button restartButton = buttonObject.GetComponent<Button>();
+        restartButton.onClick.AddListener(RestartGame);
+
+        RectTransform buttonRect = buttonObject.GetComponent<RectTransform>();
+        buttonRect.anchorMin = new Vector2(0.5f, 0.5f);
+        buttonRect.anchorMax = new Vector2(0.5f, 0.5f);
+        buttonRect.pivot = new Vector2(0.5f, 0.5f);
+        buttonRect.sizeDelta = new Vector2(260f, 70f);
+        buttonRect.anchoredPosition = new Vector2(0f, -80f);
+
+        GameObject labelObject = new GameObject("Label", typeof(RectTransform), typeof(TextMeshProUGUI));
+        labelObject.transform.SetParent(buttonObject.transform, false);
+        TextMeshProUGUI label = labelObject.GetComponent<TextMeshProUGUI>();
+        label.font = TMP_Settings.defaultFontAsset;
+        label.text = "RESTART";
+        label.fontSize = 28f;
+        label.alignment = TextAlignmentOptions.Center;
+        label.color = Color.white;
+        restartButton.targetGraphic = label;
+
+        RectTransform labelRect = label.rectTransform;
+        labelRect.anchorMin = Vector2.zero;
+        labelRect.anchorMax = Vector2.one;
+        labelRect.offsetMin = Vector2.zero;
+        labelRect.offsetMax = Vector2.zero;
+    }
+
+    private void RestartGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

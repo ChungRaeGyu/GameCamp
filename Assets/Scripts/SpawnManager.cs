@@ -8,8 +8,10 @@ using Random = UnityEngine.Random;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject[] enemys;
+    public GameObject enemys;
+    [SerializeField] private EnemySO[] enemyDatas;
     [SerializeField] private GameObject bossEnemy;
+    [SerializeField] private EnemySO[] bossEnemyData;
     [SerializeField] private GameObject commander;
     [SerializeField] private HeroSO[] normalHeros;
     [SerializeField] private HeroSO[] rareHeros;
@@ -121,31 +123,34 @@ public class SpawnManager : MonoBehaviour
         {
             return;
         }
-        HeroType temp = selectedHero.Data.HeroType;
-        selectedHero.Configure(RandomHeros(temp++));
+        HeroType nextTier = selectedHero.Data.HeroType + 1;
+        selectedHero.Configure(RandomHeros(nextTier));
 
         Destroy(matchingHero.gameObject);
         occupiedTiles.Remove(matchingCell);
     }
 
-    private bool TryGetPromotionType(HeroType currentType, out HeroType promotedType)
+    public void DestroyRandomHero()
     {
-        switch (currentType)
+        List<Vector3Int> heroCells = new();
+        foreach (KeyValuePair<Vector3Int, Hero> occupiedTile in occupiedTiles)
         {
-            case HeroType.Normal:
-                promotedType = HeroType.Rare;
-                return true;
-            case HeroType.Rare:
-                promotedType = HeroType.Myth;
-                return true;
-            case HeroType.Myth:
-                promotedType = HeroType.Legendary;
-                return true;
-            default:
-                promotedType = HeroType.Legendary;
-                return false;
+            if (occupiedTile.Value != null)
+            {
+                heroCells.Add(occupiedTile.Key);
+            }
         }
+
+        if (heroCells.Count == 0)
+        {
+            return;
+        }
+
+        Vector3Int selectedCell = heroCells[Random.Range(0, heroCells.Count)];
+        Destroy(occupiedTiles[selectedCell].gameObject);
+        occupiedTiles.Remove(selectedCell);
     }
+
 
     private HeroSO RandomHeros(HeroType type)
     {
@@ -192,27 +197,34 @@ public class SpawnManager : MonoBehaviour
     {
         if (GameManager.instance.IsBossRound)
         {
-            if (bossEnemy == null)
-            {
-                Debug.LogWarning("Boss Enemy prefab is not assigned.");
-                yield break;
-            }
-
-            Instantiate(bossEnemy, enemySpawnPoint.position, Quaternion.identity);
+            GameObject spawnedBoss = Instantiate(bossEnemy, enemySpawnPoint.position, Quaternion.identity);
+            EnemySO bossData = bossEnemyData != null && bossEnemyData.Length > 0
+                ? bossEnemyData[Mathf.Min((GameManager.instance.roundIndex + 1) / 10 - 1, bossEnemyData.Length - 1)]
+                : null;
+            ConfigureEnemy(spawnedBoss, bossData);
+            GameManager.instance.NotifyWaveSpawnComplete();
             yield break;
             //10번째마다 보스를 넣을 꺼다.
         }
-        if (enemys == null || enemys.Length == 0)
-        {
-            Debug.LogWarning("Normal enemy prefab is not assigned.");
-            yield break;
-        }
 
-        int enemyIndex = Mathf.Min(GameManager.instance.roundIndex, enemys.Length - 1);
+        int enemyIndex = Mathf.Min(GameManager.instance.roundIndex, 29);
         for (int i = 0; i < spawnCount; i++)
         {
-            Instantiate(enemys[enemyIndex], enemySpawnPoint.position, Quaternion.identity);
+            Debug.Log("인덱스" + enemyIndex);
+            GameObject spawnedEnemy = Instantiate(enemys, enemySpawnPoint.position, Quaternion.identity);
+            ConfigureEnemy(spawnedEnemy, enemyDatas[enemyIndex]);
             yield return new WaitForSeconds(0.5f);
+        }
+
+        GameManager.instance.NotifyWaveSpawnComplete();
+    }
+
+    private void ConfigureEnemy(GameObject enemyObject, EnemySO enemyData)
+    {
+        Enemy enemy = enemyObject.GetComponent<Enemy>();
+        if (enemy != null && enemyData != null)
+        {
+            enemy.Configure(enemyData);
         }
     }
 }

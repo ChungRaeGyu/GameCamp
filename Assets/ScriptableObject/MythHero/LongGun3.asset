@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55d766ee2d928b140bbfbcea9866a6e9, type: 3}
+  m_Name: LongGun3
+  m_EditorClassIdentifier: Assembly-CSharp::HeroSO
+  heroName: LongGun3
+  sprite: {fileID: 5088316998373936774, guid: c92d3db8d12f0c043bbde00935e998a9, type: 3}
+  animatorController: {fileID: 9100000, guid: dcf4866fc4dae354d9252554bd232e34, type: 2}
+  heroType: 2
+  attackDamage: 10
+  attacksPerSecond: 1
+  attackRange: 3
+  projectilePrefab: {fileID: 890673025212554320, guid: d69ba336a5ffd7a4d877291a2d892578, type: 3}
+  projectileSpeed: 8
+  projectileLifetime: 3

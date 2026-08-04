@@ -13,6 +13,7 @@ public class HeroProjectile : MonoBehaviour
         damage = attackDamage;
         speed = projectileSpeed;
         remainingLifetime = lifetime;
+        UpdateDirection();
     }
 
     private void Update()
@@ -24,6 +25,7 @@ public class HeroProjectile : MonoBehaviour
             return;
         }
 
+        UpdateDirection();
         transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
         if (Vector2.Distance(transform.position, target.transform.position) > 0.05f)
         {
@@ -32,5 +34,20 @@ public class HeroProjectile : MonoBehaviour
 
         target.TakeDamaged(damage);
         Destroy(gameObject);
+    }
+
+    private void UpdateDirection()
+    {
+        if (target == null)
+        {
+            return;
+        }
+
+        Vector2 direction = target.transform.position - transform.position;
+        if (direction.sqrMagnitude > Mathf.Epsilon)
+        {
+            // 화살 스프라이트의 앞부분이 기본적으로 위쪽을 향합니다.
+            transform.up = direction;
+        }
     }
 }

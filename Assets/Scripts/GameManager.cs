@@ -10,8 +10,11 @@ public class GameManager : MonoBehaviour
     public int roundIndex = 0;
     [SerializeField] private float normalRoundDuration = 15f;
     [SerializeField] private float bossRoundDuration = 30f;
+    [SerializeField] private float clearedWaveDelay = 1f;
     [SerializeField] private int totalRoundCount = 40;
     private float timer;
+    private float clearedWaveTimer;
+    private bool isWaveSpawnComplete;
     public bool IsGameEnded { get; private set; }
     public SpawnManager spawnManager;
     public UiManager uiManager;
@@ -26,7 +29,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public bool IsBossRound => (roundIndex + 1) % 5 == 0;
+    public bool IsBossRound => (roundIndex + 1) % 10 == 0;
 
     private void Update()
     {
@@ -35,12 +38,30 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if (isWaveSpawnComplete && enemyManager != null && enemyManager.ActiveEnemies.Count == 0)
+        {
+            clearedWaveTimer += Time.deltaTime;
+            if (clearedWaveTimer >= clearedWaveDelay)
+            {
+                AdvanceRound();
+            }
+
+            return;
+        }
+
+        clearedWaveTimer = 0f;
+
         timer -= Time.deltaTime;
         if (timer > 0f)
         {
             return;
         }
 
+        AdvanceRound();
+    }
+
+    private void AdvanceRound()
+    {
         roundIndex++;
         if (roundIndex >= totalRoundCount)
         {
@@ -63,8 +84,20 @@ public class GameManager : MonoBehaviour
 
     private void StartRound()
     {
+        isWaveSpawnComplete = false;
+        clearedWaveTimer = 0f;
         nextRound?.Invoke();
         timer = IsBossRound ? bossRoundDuration : normalRoundDuration;
+    }
+
+    public void NotifyWaveSpawnComplete()
+    {
+        if (!isStart || IsGameEnded)
+        {
+            return;
+        }
+
+        isWaveSpawnComplete = true;
     }
     public void StageClear()
     {
