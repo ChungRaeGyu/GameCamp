@@ -11,15 +11,14 @@ public class UiManager : MonoBehaviour
     private GameObject spawnButton;
     private GameObject promotionButton;
 
-    private GameObject resultCanvasObject;
-    private GameObject resultPanel;
-    private TextMeshProUGUI resultText;
+    [SerializeField] private GameObject resultCanvasObject;
+    [SerializeField] private TextMeshProUGUI resultText;
+
+    [SerializeField] private TextMeshProUGUI goldtxt;
     private void Start()
     {
         GameManager.instance.uiManager = this;
         ButtonInstantiate();
-
-        CreateResultPanel();
     }
 
     private void ButtonInstantiate()
@@ -48,81 +47,16 @@ public class UiManager : MonoBehaviour
         resultCanvasObject.SetActive(true);
     }
 
-    private void CreateResultPanel()
+    public void RestartGame()
     {
-        resultCanvasObject = new GameObject("ResultCanvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
-        Canvas resultCanvas = resultCanvasObject.GetComponent<Canvas>();
-        resultCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        resultCanvas.sortingOrder = 100;
-
-        resultPanel = new GameObject("ResultPanel", typeof(RectTransform), typeof(Image));
-        resultPanel.transform.SetParent(resultCanvasObject.transform, false);
-        Image panelImage = resultPanel.GetComponent<Image>();
-        panelImage.color = new Color(0f, 0f, 0f, 0.8f);
-
-        RectTransform panelRect = resultPanel.GetComponent<RectTransform>();
-        panelRect.anchorMin = Vector2.zero;
-        panelRect.anchorMax = Vector2.one;
-        panelRect.offsetMin = Vector2.zero;
-        panelRect.offsetMax = Vector2.zero;
-
-        GameObject textObject = new GameObject("ResultText", typeof(RectTransform), typeof(TextMeshProUGUI));
-        textObject.transform.SetParent(resultPanel.transform, false);
-        resultText = textObject.GetComponent<TextMeshProUGUI>();
-        resultText.font = TMP_Settings.defaultFontAsset;
-        resultText.fontSize = 72f;
-        resultText.alignment = TextAlignmentOptions.Center;
-
-        RectTransform textRect = resultText.rectTransform;
-        textRect.anchorMin = new Vector2(0.5f, 0.5f);
-        textRect.anchorMax = new Vector2(0.5f, 0.5f);
-        textRect.pivot = new Vector2(0.5f, 0.5f);
-        textRect.sizeDelta = new Vector2(800f, 180f);
-        textRect.anchoredPosition = new Vector2(0f, 60f);
-
-        CreateRestartButton();
-
         resultCanvasObject.SetActive(false);
-    }
 
-    private void CreateRestartButton()
-    {
-        GameObject buttonObject = new GameObject("RestartButton", typeof(RectTransform), typeof(Image), typeof(Button));
-        buttonObject.transform.SetParent(resultPanel.transform, false);
-
-        Image buttonImage = buttonObject.GetComponent<Image>();
-        buttonImage.color = Color.clear;
-
-        Button restartButton = buttonObject.GetComponent<Button>();
-        restartButton.onClick.AddListener(RestartGame);
-
-        RectTransform buttonRect = buttonObject.GetComponent<RectTransform>();
-        buttonRect.anchorMin = new Vector2(0.5f, 0.5f);
-        buttonRect.anchorMax = new Vector2(0.5f, 0.5f);
-        buttonRect.pivot = new Vector2(0.5f, 0.5f);
-        buttonRect.sizeDelta = new Vector2(260f, 70f);
-        buttonRect.anchoredPosition = new Vector2(0f, -80f);
-
-        GameObject labelObject = new GameObject("Label", typeof(RectTransform), typeof(TextMeshProUGUI));
-        labelObject.transform.SetParent(buttonObject.transform, false);
-        TextMeshProUGUI label = labelObject.GetComponent<TextMeshProUGUI>();
-        label.font = TMP_Settings.defaultFontAsset;
-        label.text = "RESTART";
-        label.fontSize = 28f;
-        label.alignment = TextAlignmentOptions.Center;
-        label.color = Color.white;
-        restartButton.targetGraphic = label;
-
-        RectTransform labelRect = label.rectTransform;
-        labelRect.anchorMin = Vector2.zero;
-        labelRect.anchorMax = Vector2.one;
-        labelRect.offsetMin = Vector2.zero;
-        labelRect.offsetMax = Vector2.zero;
-    }
-
-    private void RestartGame()
-    {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void UpdateGold(int gold)
+    {
+        goldtxt.text = $"Gold : {gold}";
     }
 }

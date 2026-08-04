@@ -9,16 +9,10 @@ using System.Xml.Linq;
 using UnityEditor;
 using UnityEngine;
 
-[InitializeOnLoad]
 public static class EnemySOExcelImporter
 {
     private const string OutputFolder = "Assets/ScriptableObject/EnemySO/Imported";
     private const string ProjectCsvPath = "Assets/CSV/Enemys.csv";
-
-    static EnemySOExcelImporter()
-    {
-        EditorApplication.delayCall += ImportProjectCsv;
-    }
 
     [MenuItem("GameCamp/Import Enemy SO From Excel")]
     public static void ImportFromExcel()

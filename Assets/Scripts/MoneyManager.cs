@@ -13,6 +13,7 @@ public class MoneyManager : MonoBehaviour
     {
         gold += amount;
         Debug.Log($"골드 추가: {amount}, 현재 골드: {gold}");
+        GameManager.instance.uiManager.UpdateGold(gold);
     }
     public int GetGold() { return gold; }
 
