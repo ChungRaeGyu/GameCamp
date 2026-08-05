@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     private float clearedWaveTimer;
     private bool isWaveSpawnComplete;
     public bool IsGameEnded { get; private set; }
+
+    public Enhance enhance;
     public SpawnManager spawnManager;
     public UiManager uiManager;
     public MoneyManager moneyManager;

@@ -124,8 +124,8 @@ public class Hero : MonoBehaviour
             Destroy(projectileObject);
             return;
         }
-
-        projectile.Initialize(target, heroData.AttackDamage, heroData.ProjectileSpeed, heroData.ProjectileLifetime);
+        float enhanceAmount = GameManager.instance.enhance.enhanceAmount[(int)heroData.HeroType];
+        projectile.Initialize(target, heroData.AttackDamage* enhanceAmount, heroData.ProjectileSpeed, heroData.ProjectileLifetime);
     }
 
     private void FaceTarget(Enemy attackTarget)
