@@ -36,6 +36,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField, Min(1)] private int attackBuffTileCount = 2;
     [SerializeField, Min(1f)] private float attackBuffDamageMultiplier = 2f;
     [SerializeField] private List<Vector3Int> attackBuffTiles = new();
+    private readonly List<AttackBuffTileGlow> attackBuffTileGlows = new();
     private Vector3Int cellPos;
 
     private Dictionary<Vector3Int, Hero> occupiedTiles = new();
@@ -129,14 +130,38 @@ public class SpawnManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < attackBuffTileCount; i++)
+        int selectedCount = Mathf.Min(attackBuffTileCount, candidates.Count);
+        for (int i = 0; i < selectedCount; i++)
         {
             int randomIndex = Random.Range(0, candidates.Count);
             attackBuffTiles.Add(candidates[randomIndex]);
             candidates.RemoveAt(randomIndex);
         }
 
+        CreateAttackBuffTileGlows();
         Debug.Log($"Selected {attackBuffTiles.Count} attack buff tile(s): {string.Join(", ", attackBuffTiles)}");
+    }
+
+    private void CreateAttackBuffTileGlows()
+    {
+        foreach (AttackBuffTileGlow glow in attackBuffTileGlows)
+        {
+            if (glow != null)
+            {
+                Destroy(glow.gameObject);
+            }
+        }
+
+        attackBuffTileGlows.Clear();
+        foreach (Vector3Int tilePosition in attackBuffTiles)
+        {
+            GameObject glowObject = new GameObject("Attack Buff Tile Glow");
+            glowObject.transform.position = tilemap.GetCellCenterWorld(tilePosition);
+
+            AttackBuffTileGlow glow = glowObject.AddComponent<AttackBuffTileGlow>();
+            glow.Initialize(tilemap.cellSize);
+            attackBuffTileGlows.Add(glow);
+        }
     }
 
     public void PromotionButton()
@@ -272,5 +297,65 @@ public class SpawnManager : MonoBehaviour
     {
         GameObject spawnedEnemy = Instantiate(enemys, enemySpawnPoint.position, Quaternion.identity);
         ConfigureEnemy(spawnedEnemy, missionEnemyDatas[i]);
+    }
+}
+
+public class AttackBuffTileGlow : MonoBehaviour
+{
+    private static Sprite glowSprite;
+
+    private SpriteRenderer spriteRenderer;
+    private Vector3 baseScale;
+    private float phase;
+
+    public void Initialize(Vector3 cellSize)
+    {
+        spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = GetGlowSprite();
+        spriteRenderer.color = new Color(1f, 0.78f, 0.12f, 0.45f);
+        spriteRenderer.sortingOrder = 1;
+
+        baseScale = new Vector3(cellSize.x * 1.15f, cellSize.y * 1.15f, 1f);
+        transform.localScale = baseScale;
+        phase = Random.value * Mathf.PI * 2f;
+    }
+
+    private void Update()
+    {
+        float pulse = (Mathf.Sin(Time.time * 3f + phase) + 1f) * 0.5f;
+        transform.localScale = baseScale * Mathf.Lerp(0.9f, 1.12f, pulse);
+
+        Color color = spriteRenderer.color;
+        color.a = Mathf.Lerp(0.24f, 0.58f, pulse);
+        spriteRenderer.color = color;
+    }
+
+    private static Sprite GetGlowSprite()
+    {
+        if (glowSprite != null)
+        {
+            return glowSprite;
+        }
+
+        const int size = 64;
+        Texture2D texture = new Texture2D(size, size, TextureFormat.RGBA32, false);
+        texture.filterMode = FilterMode.Bilinear;
+        texture.wrapMode = TextureWrapMode.Clamp;
+
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
+                float normalizedX = (x + 0.5f) / size * 2f - 1f;
+                float normalizedY = (y + 0.5f) / size * 2f - 1f;
+                float distance = Mathf.Sqrt(normalizedX * normalizedX + normalizedY * normalizedY);
+                float alpha = Mathf.Clamp01(1f - distance);
+                texture.SetPixel(x, y, new Color(1f, 1f, 1f, alpha * alpha));
+            }
+        }
+
+        texture.Apply();
+        glowSprite = Sprite.Create(texture, new Rect(0f, 0f, size, size), new Vector2(0.5f, 0.5f), size);
+        return glowSprite;
     }
 }
