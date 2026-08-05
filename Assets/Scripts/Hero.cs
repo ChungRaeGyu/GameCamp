@@ -15,6 +15,7 @@ public class Hero : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private float attackTimer;
+    private float tileAttackMultiplier = 1f;
 
     private Enemy target;
 
@@ -65,6 +66,11 @@ public class Hero : MonoBehaviour
     {
         heroData = data;
         ApplyHeroData();
+    }
+
+    public void SetTileAttackMultiplier(float multiplier)
+    {
+        tileAttackMultiplier = Mathf.Max(0f, multiplier);
     }
 
     private void ApplyHeroData()
@@ -125,7 +131,7 @@ public class Hero : MonoBehaviour
             return;
         }
         float enhanceAmount = GameManager.instance.enhance.enhanceAmount[(int)heroData.HeroType];
-        projectile.Initialize(target, heroData.AttackDamage* enhanceAmount, heroData.ProjectileSpeed, heroData.ProjectileLifetime);
+        projectile.Initialize(target, heroData.AttackDamage * enhanceAmount * tileAttackMultiplier, heroData.ProjectileSpeed, heroData.ProjectileLifetime);
     }
 
     private void FaceTarget(Enemy attackTarget)

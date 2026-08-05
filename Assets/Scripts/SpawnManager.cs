@@ -32,6 +32,10 @@ public class SpawnManager : MonoBehaviour
 
     SpawnUnit spawnInput;
     [SerializeField] private Tilemap tilemap;
+    [SerializeField] private List<TileBase> nonSpawnableTiles = new();
+    [SerializeField, Min(1)] private int attackBuffTileCount = 2;
+    [SerializeField, Min(1f)] private float attackBuffDamageMultiplier = 2f;
+    [SerializeField] private List<Vector3Int> attackBuffTiles = new();
     private Vector3Int cellPos;
 
     private Dictionary<Vector3Int, Hero> occupiedTiles = new();
@@ -47,6 +51,7 @@ public class SpawnManager : MonoBehaviour
     {
         GameManager.instance.spawnManager = this;
         GameManager.instance.nextRound += OnNextRound;
+        SelectAttackBuffTiles();
         Instantiate(commander, commanderSpawnPoint.position, Quaternion.identity);
     }
 
@@ -74,6 +79,12 @@ public class SpawnManager : MonoBehaviour
             {
                 return;
             }
+
+            if (nonSpawnableTiles.Contains(tile))
+            {
+                return;
+            }
+
             Vector3 pos = tilemap.GetCellCenterWorld(cellPos);
 
             if (occupiedTiles.ContainsKey(cellPos))
@@ -99,8 +110,33 @@ public class SpawnManager : MonoBehaviour
         GameObject obj = Instantiate(heroPrefabs, new Vector3(pos.x,pos.y,0), Quaternion.identity);
         Hero hero = obj.GetComponent<Hero>();
         hero.Configure(RandomHeros(HeroType.Random));
+        hero.SetTileAttackMultiplier(attackBuffTiles.Contains(cellPos) ? attackBuffDamageMultiplier : 1f);
         occupiedTiles.Add(cellPos, hero);
         hero.tilePos = cellPos;
+    }
+
+    private void SelectAttackBuffTiles()
+    {
+        attackBuffTiles.Clear();
+
+        List<Vector3Int> candidates = new();
+        foreach (Vector3Int tilePosition in tilemap.cellBounds.allPositionsWithin)
+        {
+            TileBase tile = tilemap.GetTile(tilePosition);
+            if (tile != null && !nonSpawnableTiles.Contains(tile))
+            {
+                candidates.Add(tilePosition);
+            }
+        }
+
+        for (int i = 0; i < attackBuffTileCount; i++)
+        {
+            int randomIndex = Random.Range(0, candidates.Count);
+            attackBuffTiles.Add(candidates[randomIndex]);
+            candidates.RemoveAt(randomIndex);
+        }
+
+        Debug.Log($"Selected {attackBuffTiles.Count} attack buff tile(s): {string.Join(", ", attackBuffTiles)}");
     }
 
     public void PromotionButton()
