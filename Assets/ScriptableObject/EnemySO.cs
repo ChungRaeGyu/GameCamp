@@ -15,7 +15,7 @@ public class EnemySO : ScriptableObject
     [Min(0.01f)]
     [SerializeField] private float attacksPerSecond = 1f;
     [SerializeField] private float speed = 1f;
-
+    [SerializeField] private int gold = 10;
 
     public string EnemyName => enemyName;
     public Sprite Sprite => sprite;
@@ -24,7 +24,7 @@ public class EnemySO : ScriptableObject
     public float AttackInterval => 1f / attacksPerSecond;
     public float MoveSpeed => speed;
     public float Hp => hp;
-
+    public int Gold => gold;
     public void ConfigureStats(string name, float health, float damage, float attackSpeed, float moveSpeed)
     {
         enemyName = name;

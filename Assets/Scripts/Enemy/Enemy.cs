@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 public interface Idamagable
 {
@@ -107,7 +106,7 @@ public class Enemy : MonoBehaviour, Idamagable
     private void Dead()
     {
         //나중에 적 SO를 만들어서 골드까지 넣자
-        GameManager.instance.moneyManager.AddGold(10);
+        GameManager.instance.moneyManager.AddGold(enemyData.Gold);
         Destroy(gameObject);
     }
 

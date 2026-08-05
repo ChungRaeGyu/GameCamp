@@ -10,13 +10,19 @@ public class SpawnManager : MonoBehaviour
 {
     public GameObject enemys;
     [SerializeField] private EnemySO[] enemyDatas;
+
+    [SerializeField] private EnemySO[] missionEnemyDatas;
+
     [SerializeField] private GameObject bossEnemy;
     [SerializeField] private EnemySO[] bossEnemyData;
+
     [SerializeField] private GameObject commander;
+
     [SerializeField] private HeroSO[] normalHeros;
     [SerializeField] private HeroSO[] rareHeros;
     [SerializeField] private HeroSO[] mythHeros;
     [SerializeField] private HeroSO[] legendaryHeros;
+
     [SerializeField] private GameObject heroPrefabs;
 
 
@@ -63,11 +69,9 @@ public class SpawnManager : MonoBehaviour
 
             TileBase tile = tilemap.GetTile(cellPos);
 
-            Debug.Log($"타일 좌표: {cellPos}, 타일: {tile}");
             Debug.Log(tilemap.cellBounds);
             if (tile == null)
             {
-                Debug.Log("으잉?");
                 return;
             }
             Vector3 pos = tilemap.GetCellCenterWorld(cellPos);
@@ -198,10 +202,11 @@ public class SpawnManager : MonoBehaviour
         if (GameManager.instance.IsBossRound)
         {
             GameObject spawnedBoss = Instantiate(bossEnemy, enemySpawnPoint.position, Quaternion.identity);
-            EnemySO bossData = bossEnemyData != null && bossEnemyData.Length > 0
-                ? bossEnemyData[Mathf.Min((GameManager.instance.roundIndex + 1) / 10 - 1, bossEnemyData.Length - 1)]
-                : null;
-            ConfigureEnemy(spawnedBoss, bossData);
+            int currentRound = GameManager.instance.roundIndex + 1;
+            int bossIndex = currentRound / 10 - 1;
+
+            ConfigureEnemy(spawnedBoss, bossEnemyData[bossIndex]);
+
             GameManager.instance.NotifyWaveSpawnComplete();
             yield break;
             //10번째마다 보스를 넣을 꺼다.
@@ -210,7 +215,6 @@ public class SpawnManager : MonoBehaviour
         int enemyIndex = Mathf.Min(GameManager.instance.roundIndex, 29);
         for (int i = 0; i < spawnCount; i++)
         {
-            Debug.Log("인덱스" + enemyIndex);
             GameObject spawnedEnemy = Instantiate(enemys, enemySpawnPoint.position, Quaternion.identity);
             ConfigureEnemy(spawnedEnemy, enemyDatas[enemyIndex]);
             yield return new WaitForSeconds(0.5f);
@@ -226,5 +230,11 @@ public class SpawnManager : MonoBehaviour
         {
             enemy.Configure(enemyData);
         }
+    }
+
+    public void SpawnMissionEnemy(int i)
+    {
+        GameObject spawnedEnemy = Instantiate(enemys, enemySpawnPoint.position, Quaternion.identity);
+        ConfigureEnemy(spawnedEnemy, missionEnemyDatas[i]);
     }
 }
