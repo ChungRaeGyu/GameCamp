@@ -15,9 +15,9 @@ MonoBehaviour:
   heroName: LongGun4
   sprite: {fileID: 5088316998373936774, guid: d649e1ccbc8d38544ae860250051c364, type: 3}
   animatorController: {fileID: 9100000, guid: c45473c3165843a4eac71bac3eb8b190, type: 2}
-  heroType: 2
-  attackDamage: 10
-  attacksPerSecond: 1
+  heroType: 3
+  attackDamage: 200
+  attacksPerSecond: 2
   attackRange: 3
   projectilePrefab: {fileID: 890673025212554320, guid: d69ba336a5ffd7a4d877291a2d892578, type: 3}
   projectileSpeed: 8

@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6196322a01cf6d3449d0b1779b41d670, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Boss
-  heroDestroyInterval: 5
+  heroDestroyInterval: 10
 --- !u!95 &73134182259325481
 Animator:
   serializedVersion: 7

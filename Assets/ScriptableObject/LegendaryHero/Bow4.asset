@@ -16,8 +16,8 @@ MonoBehaviour:
   sprite: {fileID: 5088316998373936774, guid: 91223bdaf13bf1b4e89dbd6e5405f90e, type: 3}
   animatorController: {fileID: 9100000, guid: 0df466245501dc049b13683c5fe823c9, type: 2}
   heroType: 3
-  attackDamage: 10
-  attacksPerSecond: 1
+  attackDamage: 200
+  attacksPerSecond: 2
   attackRange: 3
   projectilePrefab: {fileID: 7904444019433152226, guid: b3bc34e4d29d7c14ba325c5fb23595d9, type: 3}
   projectileSpeed: 8

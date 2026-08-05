@@ -5,7 +5,6 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
-[InitializeOnLoad]
 public static class SpriteAnimationGenerator
 {
     private const float FramesPerSecond = 8f;
@@ -14,11 +13,6 @@ public static class SpriteAnimationGenerator
         "Assets/Images/Enemy",
         "Assets/Images/Heros"
     };
-
-    static SpriteAnimationGenerator()
-    {
-        EditorApplication.delayCall += GenerateAll;
-    }
 
     [MenuItem("GameCamp/Generate Sprite Animations")]
     public static void GenerateAll()

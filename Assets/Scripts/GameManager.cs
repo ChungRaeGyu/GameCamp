@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float normalRoundDuration = 15f;
     [SerializeField] private float bossRoundDuration = 30f;
     [SerializeField] private float clearedWaveDelay = 1f;
-    [SerializeField] private int totalRoundCount = 40;
+    [SerializeField] private int totalRoundCount = 30;
     private float timer;
     private float clearedWaveTimer;
     private bool isWaveSpawnComplete;
@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
             GameClear();
             return;
         }
+        uiManager.UpdateStage();
 
         StartRound();
     }
@@ -99,11 +100,6 @@ public class GameManager : MonoBehaviour
 
         isWaveSpawnComplete = true;
     }
-    public void StageClear()
-    {
-        roundIndex++;
-
-    }
     public void GameOver()
     {
         EndGame(false);
@@ -113,7 +109,7 @@ public class GameManager : MonoBehaviour
     {
         EndGame(true);
         
-        //roundIndex가 한 40라운드에서 게임 종료 하는 걸로;;
+        //roundIndex가 한 30라운드에서 게임 종료 하는 걸로;;
     }
 
     private void EndGame(bool isVictory)

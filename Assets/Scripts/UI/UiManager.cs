@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +14,8 @@ public class UiManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI resultText;
 
     [SerializeField] private TextMeshProUGUI goldtxt;
+    [SerializeField] private TextMeshProUGUI stageTxt;
+
     private void Start()
     {
         GameManager.instance.uiManager = this;
@@ -58,5 +59,10 @@ public class UiManager : MonoBehaviour
     public void UpdateGold(int gold)
     {
         goldtxt.text = $"Gold : {gold}";
+    }
+
+    public void UpdateStage()
+    {
+        stageTxt.text = $"{GameManager.instance.roundIndex+1} / 30";
     }
 }

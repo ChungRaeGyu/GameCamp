@@ -15,9 +15,9 @@ MonoBehaviour:
   heroName: Gun4
   sprite: {fileID: 5088316998373936774, guid: 757c33912439ee94e904cff6b93a192e, type: 3}
   animatorController: {fileID: 9100000, guid: 44586cbe77f844f4dab95d59b86c1adf, type: 2}
-  heroType: 2
-  attackDamage: 10
-  attacksPerSecond: 1
+  heroType: 3
+  attackDamage: 200
+  attacksPerSecond: 2
   attackRange: 3
   projectilePrefab: {fileID: 7844965060319381413, guid: d2e2cca30be3b754ab36113a6b268663, type: 3}
   projectileSpeed: 8
