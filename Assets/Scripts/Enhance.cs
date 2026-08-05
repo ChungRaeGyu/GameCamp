@@ -1,9 +1,12 @@
+using TMPro;
 using UnityEngine;
 
 public class Enhance : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
     public float[] enhanceAmount = new float[]{1f,1f,1f,1f};
+    public int[] enhancePrice = new int[] { 1, 1, 1, 1 };
+    public TMP_Text[] enhanceAmountText;
 
     public void Start()
     {
@@ -21,6 +24,12 @@ public class Enhance : MonoBehaviour
     public void EnhanceBtn(int type)
     {
         //HeroType을 사용해서 증가 수치를 다르게 할 수도 있음
+        if (enhancePrice[type] > GameManager.instance.moneyManager.GetGold())
+            return;
+        enhancePrice[type]++;
+        GameManager.instance.moneyManager.AddGold(-enhancePrice[type]);
         enhanceAmount[type] += 0.2f;
+        HeroType heroType = (HeroType)type;
+        enhanceAmountText[type].text = $"{((HeroType)type).ToString()}({enhancePrice[type]})";
     }
 }

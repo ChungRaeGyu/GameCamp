@@ -131,7 +131,7 @@ public class Hero : MonoBehaviour
             return;
         }
         float enhanceAmount = GameManager.instance.enhance.enhanceAmount[(int)heroData.HeroType];
-        projectile.Initialize(target, heroData.AttackDamage * enhanceAmount * tileAttackMultiplier, heroData.ProjectileSpeed, heroData.ProjectileLifetime);
+        projectile.Initialize(target, heroData.AttackDamage + enhanceAmount * tileAttackMultiplier, heroData.ProjectileSpeed, heroData.ProjectileLifetime);
     }
 
     private void FaceTarget(Enemy attackTarget)
@@ -144,7 +144,7 @@ public class Hero : MonoBehaviour
         float horizontalDistance = attackTarget.transform.position.x - transform.position.x;
         if (!Mathf.Approximately(horizontalDistance, 0f))
         {
-            spriteRenderer.flipX = horizontalDistance < 0f;
+            spriteRenderer.flipX = horizontalDistance > 0f;
         }
     }
 }
